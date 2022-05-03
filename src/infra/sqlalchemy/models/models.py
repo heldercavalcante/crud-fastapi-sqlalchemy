@@ -13,8 +13,14 @@ class Product(Base):
     available = Column(Boolean)
     size = Column(String)
     user_id = Column(Integer, ForeignKey('user.id', name='fk_user'))
+    category_id = Column(Integer, ForeignKey('categories.id', name='fk_category'))
 
     user = relationship('User', back_populates = 'products')
+    category = relationship('Category', back_populates = 'categories')
+
+    def validate(self):
+        if len(self.name) < 4:
+            raise Exception('name should have 4 caracteres')
 
 class User(Base):
     __tablename__ = 'user'
@@ -25,4 +31,14 @@ class User(Base):
     phone = Column(String)
 
     products = relationship('Product', back_populates = 'user')
+
+class Category(Base):
+    __tablename__ = 'categories'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+
+    categories = relationship('Product', back_populates = 'category')
+
+
 

@@ -9,38 +9,36 @@ class ProductRepository():
         self.session = session
 
 
-    def create(self, product: schemas.Product):
+    def create(self, product: models.Product):
         #turn schema to model
-        #then the product can operate with database
-        db_product = models.Product(name=product.name, 
-                                    details=product.details,
-                                    price=product.price,
-                                    available=product.available,
-                                    size=product.size,
-                                    user_id=product.user_id)
-        self.session.add(db_product)
+        #then the product can operate with database    
+        self.session.add(product)
         self.session.commit()
-        self.session.refresh(db_product)
-        return db_product
+        self.session.refresh(product)
+        return product
 
     
     def list(self):
-        products = self.session.query(models.Product).all()
-        return products
+        return self.session.query(models.Product).all()
+        
 
-    def remove(self, id: int):
-        delete_product = delete(models.Product).where(models.Product.id == id)
+    def remove(self, product:models.Product):
+        delete_product = delete(models.Product).where(models.Product.id == product.id)
         self.session.execute(delete_product)
         self.session.commit()
 
 
-    def update(self,id:int, product: schemas.Product):
-        update_product = update(models.Product).where(
-                models.Product.id == id).values(name=product.name, 
+    def update(self, product: models.Product):
+        db_product = update(models.Product).where(
+                models.Product.id == product.id).values(name=product.name, 
                                                         details=product.details,
                                                         price=product.price,
                                                         available=product.available,
                                                         size=product.size
                                                         )
-        self.session.execute(update_product)
+        self.session.execute(db_product)
         self.session.commit()
+        return product
+
+    def get_by_id(self, id: int) -> models.Product:
+        return self.session.query(models.Product).where(models.Product.id == id).first()
