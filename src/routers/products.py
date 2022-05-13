@@ -26,7 +26,11 @@ def create_products(product: schemas.Product, session:Session = Depends(get_db))
 @router.get("/products")
 def product_list(session:Session = Depends(get_db)):
     #return ProductRepository(session).list()
-    return ProductService(ProductRepository(session).list())
+    return ProductService(ProductRepository(session)).list()
+
+@router.get("/products/{id}")
+def get_product_by_id(id, session:Session = Depends(get_db)):
+    return ProductService(ProductRepository(session)).get_by_id(id)
 
 
 

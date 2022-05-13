@@ -1,4 +1,4 @@
-
+import time
 from infra.sqlalchemy.repository.product import ProductRepository
 from infra.sqlalchemy.models import models
 from schemas import schemas
@@ -25,6 +25,7 @@ class ProductService():
 
     
     def list(self):
+        #time.sleep(3)
         return self.repository.list()
   
 
@@ -43,3 +44,6 @@ class ProductService():
         product_model.size=product.size
         self.repository.update(product_model)
         return product_model
+
+    def get_by_id(self,id):
+        return self.repository.get_by_id(id)
