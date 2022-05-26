@@ -22,7 +22,7 @@ class Product(BaseModel):
     details: str
     price: float
     available: bool = False
-    size: float
+    #size: float
     user_id: Optional[int]
 
     class Config:
@@ -33,7 +33,7 @@ class ProductUpdate(BaseModel):
     details: str
     price: float
     available: bool = False
-    size: float
+    #size: float
     user_id: Optional[int]
 
     class Config:

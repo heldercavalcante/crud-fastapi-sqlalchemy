@@ -11,7 +11,7 @@ class Product(Base):
     details = Column(String)
     price = Column(Float)
     available = Column(Boolean)
-    size = Column(String)
+    #size = Column(String)
     user_id = Column(Integer, ForeignKey('user.id', name='fk_user'))
     category_id = Column(Integer, ForeignKey('categories.id', name='fk_category'))
 
